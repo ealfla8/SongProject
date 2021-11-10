@@ -10,7 +10,6 @@
 using namespace std; 
 
 void GetDataFromFile(string filePath, vector<Song>& songs){
-    
     ifstream inFile(filePath); 
 
     if(inFile.is_open()){
@@ -35,7 +34,6 @@ void GetDataFromFile(string filePath, vector<Song>& songs){
                 getline(stream, artistName, ','); 
                 getline(stream, album, ','); 
                 getline(stream, genre, ','); 
-                //trying not the comma delimiter getline(stream, favLyric, ','); 
                 getline(stream, favLyric); 
 
                 Song a(songTitle, artistName, album, genre, favLyric); 
@@ -48,17 +46,29 @@ void GetDataFromFile(string filePath, vector<Song>& songs){
     }
 } 
 
+void ListAllSongs(vector<Song>& songs){
+    for(int i=0; i<songs.size(); i++){ //Why does it say I have one more song than I have... 
+        songs.at(i).PrintInfo(); 
+    }
+}
+
 int main(){
 
-    //cout << "The file that will be opened is the Songs.csv file" << endl; 
 
     vector<Song> songs; 
     GetDataFromFile("Songs.csv", songs); 
 
-    cout << songs.size(); //The size of songs  is 44 when I have 11 songs... 
-    for(unsigned int i=0; i<songs.size(); i++){
-        songs.at(i).PrintInfo(); 
+    cout << "Type in the number of the choice you would like. " << endl; 
+    
+    cout << "1. List all songs with their info." << endl; 
+
+    int input;
+    cin >> input; 
+    if(input == 1){
+        ListAllSongs(songs); 
     }
-    //Part of my code does not work I think it is with spacing and lyrics.. 
+
+    cout << "The number of songs is " << songs.size() << "." << endl; //Currently, I have 10 songs.. It says I have 11 songs... 
+    
     
 }
