@@ -47,17 +47,22 @@ void GetDataFromFile(string filePath, vector<Song>& songs){
 } 
 
 void ListAllSongs(vector<Song>& songs){
-    for(int i=0; i<songs.size(); i++) //Why does it say I have one more song than I have... 
+    for(int i=0; i<songs.size(); i++) 
         songs.at(i).PrintInfo(); 
 }
 
 void FindArtist(vector<Song>& songs, string artist){
-    cout << "Songs from " << artist << ":" << endl;  //should print out something if artist not found
+    bool ArtistFound = false; 
+    cout << "Songs from " << artist << ":" << endl; 
     for(int i=0; i<songs.size(); i++){
         if(songs.at(i).getArtistName() == artist){
+            ArtistFound = true; 
             string title = songs.at(i).getSongTitle(); 
             cout << title << endl;
         }
+    }
+    if(!ArtistFound){
+        cout << "No songs found for this artist" << endl;
     }
 }
 
@@ -79,12 +84,9 @@ int main(){
     if (input ==2){
         cout << "Type the artist name." << endl; 
         string artist; 
-        cin >> artist; //fix this so it works with names with more than one word
+        cin.ignore();
+        getline(cin, artist); 
         FindArtist(songs,artist); 
-    }
-
-
-    //cout << "The number of songs is " << songs.size() << "." << endl; //Currently, I have 10 songs.. It says I have 11 songs... 
-    
+    } 
     
 }
