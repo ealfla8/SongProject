@@ -26,5 +26,7 @@ class Song{
         string getFavLyric(); 
 
         void PrintInfo(); 
+
+        bool operator<(Song& p); 
     
 }; 
