@@ -4,6 +4,7 @@
 #include <vector> 
 #include <string> 
 #include <sstream>
+#include <algorithm>
 
 #include "Song.h"
 
@@ -51,6 +52,12 @@ void ListAllSongs(vector<Song>& songs){
         songs.at(i).PrintInfo(); 
 }
 
+void PrintSongTitles(vector<Song>& songs){
+    for(int i=0; i<songs.size(); i++){
+        cout << songs.at(i).getSongTitle() << endl; 
+    }
+}
+
 void FindArtist(vector<Song>& songs, string artist){
     bool ArtistFound = false; 
     cout << "Songs from " << artist << ":" << endl; 
@@ -66,15 +73,22 @@ void FindArtist(vector<Song>& songs, string artist){
     }
 }
 
+void Alphabetize(vector<Song>& songs){
+    sort(songs.begin(), songs.end());
+}
+
 int main(){
 
     vector<Song> songs; 
+    vector<string> songTitles; 
+
     GetDataFromFile("Songs.csv", songs); 
 
     cout << "Type in the number of the choice you would like. " << endl; 
     
     cout << "1. List all songs with their info." << endl; 
     cout << "2. List all songs of a particular artist." << endl; 
+    cout << "3. Alphabetize the song titles." << endl; 
 
     int input;
     cin >> input; 
@@ -88,5 +102,9 @@ int main(){
         getline(cin, artist); 
         FindArtist(songs,artist); 
     } 
+    if(input == 3){
+        Alphabetize(songs); 
+        PrintSongTitles(songs); 
+    }
     
 }
