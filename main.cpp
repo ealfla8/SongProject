@@ -12,6 +12,18 @@
 
 using namespace std; 
 
+//Funtion Declarations
+vector<Song> GetDataFromFile(string filePath); 
+void ListAllSongs(vector<Song>& songs); 
+void PrintSongTitles(vector<Song>& songs); 
+void FindArtist(vector<Song>& songs, string artist); 
+void Alphabetize(vector<Song>& songs); 
+map<string, int> ListAllArtists(vector<Song>& songs); 
+void SettingArtistNameMap(map<string, int>& artistNameMap, vector<Song>&songs); 
+void PrintArtistNameMap(map<string,int>& artistNameMap); 
+int CountNumSongs(vector<Song>&songs, string artistName); 
+void CompleteArtistNameMap(vector<Song>& songs);
+
 vector<Song> GetDataFromFile(string filePath){
     ifstream inFile(filePath); 
     vector<Song> songs; 
@@ -93,24 +105,39 @@ map<string, int> ListAllArtists(vector<Song>& songs){
     return artistNames;
 }
 
+void CompleteArtistNameMap(vector<Song>& songs){
+    map<string, int> artistNameMap = ListAllArtists(songs); 
+    SettingArtistNameMap(artistNameMap, songs); 
+    PrintArtistNameMap(artistNameMap); 
+}
+
 void SettingArtistNameMap(map<string, int>& artistNameMap, vector<Song>&songs){
-    
+for(auto iter = artistNameMap.begin(); iter != artistNameMap.end(); iter++){
+        string artistName = iter->first; 
+        int count = CountNumSongs(songs,artistName); 
+          iter->second = count; 
+    }
 }
 void PrintArtistNameMap(map<string,int>& artistNameMap){ 
     map<string,int>::iterator iter;  
     for(iter = artistNameMap.begin(); iter != artistNameMap.end(); iter++){
-        cout << "Artist Name: " << iter->first << endl; 
-        cout << "Number of songs: " << iter->second << endl; 
+        cout << "Number of Songs by " << iter->first << ": " << iter->second << endl; 
     }
 }
 
+int CountNumSongs(vector<Song>&songs, string artistName){
+    int count =0; 
+    for(int i=0; i<songs.size(); i++){
+        if(songs.at(i).getArtistName() == artistName)
+            count++; 
+    }
+    return count; 
+} 
 
 int main(){
 
     vector<Song> songs = GetDataFromFile("Songs.csv"); 
     Alphabetize(songs); 
-    map<string,int> artistNameMap = ListAllArtists(songs); 
-
 
     cout << "Type in the number of the choice you would like. " << endl; 
     
@@ -131,7 +158,7 @@ int main(){
         FindArtist(songs,artist); 
     } 
     else if (input ==3){
-        PrintArtistNameMap(artistNameMap); 
+        CompleteArtistNameMap(songs); 
     } 
   
     
