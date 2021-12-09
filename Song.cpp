@@ -1,4 +1,4 @@
-#include <iostream> //check what I need iostream for 
+#include <iostream>  
 #include <string> 
 #include "Song.h"
 using namespace std; 
@@ -41,3 +41,7 @@ void Song::PrintInfo(){
     cout << "Favorite Lyric: " << favLyric << endl; 
     cout << endl; 
 } 
+
+bool Song::operator<(Song& p) {
+    return songTitle < p.getSongTitle(); 
+}
